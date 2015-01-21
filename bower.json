@@ -1,0 +1,13 @@
+{
+  "name": "emoji-translate",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/notwaldorf/emoji-translate"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/notwaldorf/emoji-translate",
+  "dependencies": {
+    "emojilib": "muan/emojilib"
+  }
+}
