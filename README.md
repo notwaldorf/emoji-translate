@@ -1,2 +1,3 @@
 # emoji-translate
-Chrome extension to translate text to emoji.
+
+This is the only bookmarklet you will ever need. It translates english to emoji.

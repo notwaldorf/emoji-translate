@@ -1,20 +1,19 @@
 <html>
 <head>
-  <title>zomg</title>
+  <title>emoji-translate demo</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
+  <script src="jquery-2.1.4.min.js"></script>
+  <script src="emoji-translate.js"></script>
 </head>
 <style>
 </style>
 
 <body>
 <div>
-  <img src="http://38.media.tumblr.com/tumblr_m0afdxYVEw1qhy6c9o7_400.gif">
 
   <p>This is a bee. <b>This is a cat.</b></p>
 
@@ -22,99 +21,4 @@
   </p>
 </div>
 </body>
-
-<script>
-var allEmojis;
-var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
-
-$.getJSON('bower_components/emojilib/emojis.json', function (emojis) {
-  allEmojis = emojis;
-  translateAllTheThings();
-});
-
-function translateAllTheThings() {
-  // Find everything that has a text, isn't just a space, and wrap it
-  // in something we can track later. Unless we've already done so.
-  if ($('#did-the-parsing-bit')[0])
-    return;
-
-  $('body :not(iframe)').contents().filter(function() {
-    return (this.nodeType == Node.TEXT_NODE) && this.nodeValue.match(/\S/);
-  }).wrap("<span class='text-chunk'></span>");
-
-  // Add a guard so that we don't do this twice.
-  $('body').append($('<span id="did-the-parsing-bit"></span>'));
-
-  var elements = $('.text-chunk');
-  var container, words;
-
-  // Tokenize the text and apply the style to each letter.
-  for (var e = 0; e < elements.length; e++) {
-    container = $(elements[e]);
-    words = elements[e].innerHTML.split(' ');
-    container.empty();
-
-    // Re-add the translated words.
-    for (var i = 0; i < words.length; i++ ) {
-      container.append(translateWord(words[i]));
-    }
-  }
-}
-
-function translateWord(word) {
-  var node = $('<span></span>');
-
-  // Punctuation blows. Get all the punctuation at the start and end of the word.
-  var firstSymbol = '';
-  var lastSymbol = '';
-
-  while (SYMBOLS.indexOf(word[0]) != -1) {
-    firstSymbol += word[0];
-    word = word.slice(1, word.length);
-  }
-
-  while (SYMBOLS.indexOf(word[word.length - 1]) != -1) {
-    lastSymbol += word[word.length - 1];
-    word = word.slice(0, word.length - 1);
-  }
-
-  var emoji = getMeAnEmoji(word);
-  if (emoji != '') {
-    node[0].title = word;
-    // Emoji in bold text isn't rendered in Chrome :sob:
-    node[0].style.fontWeight = 'normal';
-    node.text(emoji);
-  } else {
-    node.text(word);
-  }
-
-  // Reapply the punctuation.
-  node.text(firstSymbol + node.text() + lastSymbol + ' ');
-  return node;
-}
-
-function getMeAnEmoji(keyword) {
-  keyword = keyword.trim().toLowerCase();
-
-  if (!keyword || keyword == '')
-    return '';
-
-  // Maybe this is a simple plural word?
-  var maybeSingular = '';
-  if (keyword[keyword.length - 1] == 's')
-    maybeSingular = keyword.slice(0, keyword.length - 1);
-
-  // Go through all the things and find the first one that matches.
-  for (var emoji in allEmojis) {
-    var keywords = allEmojis[emoji].keywords;
-    if (emoji == keyword || emoji == maybeSingular ||
-        (keywords && keywords.indexOf(keyword) >= 0) ||
-        (keywords && keywords.indexOf(maybeSingular) >= 0))
-      return allEmojis[emoji].char;
-  }
-  return '';
-};
-
-</script>
-
 </html>
