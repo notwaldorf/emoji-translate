@@ -2,7 +2,7 @@
 
 You know how sometimes you type English and it has all these letters and words and no emoji? Yeah, emoji-translate fixes that.
 
-![omg emoji](https://cloud.githubusercontent.com/assets/1369170/8634865/32885202-27bf-11e5-8163-29e959c3720b.gif)
+![omg emoji](https://cloud.githubusercontent.com/assets/1369170/8635052/e333474e-27c7-11e5-8af8-5b0bc2281095.gif)
 
 ## I want it now!
 Right? Can't blame you. [Here](http://meowni.ca/emoji-translate) you go. 👏
