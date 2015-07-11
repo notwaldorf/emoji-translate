@@ -15,6 +15,7 @@ var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
 
 function translateWord(word) {
   var node = document.createElement('span');
+  var emojiContainer = document.createElement('span');
 
   // Punctuation blows. Get all the punctuation at the start and end of the word.
   var firstSymbol = '';
@@ -31,12 +32,13 @@ function translateWord(word) {
   }
 
   var emoji = getMeAnEmoji(word);
-  if (emoji != '') {
-    node.title = word;
+  if (emoji !== '') {
+    emojiContainer.title = word;
     // Emoji in bold text isn't rendered in Chrome :sob:
-    node.style.fontWeight = 'normal';
-    node.style.fontFamily = 'AppleColorEmoji';
-    node.innerHTML = emoji;
+    emojiContainer.style.fontWeight = 'normal';
+    emojiContainer.style.fontFamily = 'AppleColorEmoji';
+    emojiContainer.innerHTML = emoji;
+    node.appendChild(emojiContainer);
   } else {
     node.innerHTML = word;
   }
