@@ -58,7 +58,8 @@ function getMeAnEmoji(keyword) {
     maybeSingular = keyword.slice(0, keyword.length - 1);
 
   // Maybe this is a singular word but the keyword is the plural?
-  var maybePlural = keyword + 's';
+  // Don't do this for single letter since that will pluralize crazy things.
+  var maybePlural = (keyword.length == 1) ? '' : keyword + 's';
 
   // Go through all the things and find the first one that matches.
   for (var emoji in allEmojis) {
