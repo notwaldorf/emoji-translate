@@ -35,6 +35,7 @@ function translateWord(word) {
     node.title = word;
     // Emoji in bold text isn't rendered in Chrome :sob:
     node.style.fontWeight = 'normal';
+    node.style.fontFamily = 'AppleColorEmoji';
     node.innerHTML = emoji;
   } else {
     node.innerHTML = word;
