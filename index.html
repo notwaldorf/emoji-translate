@@ -5,69 +5,20 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+  <link href="style.css" rel="stylesheet" />
   <script src="jquery-2.1.4.min.js"></script>
   <script src="demo.js"></script>
   <script src="emoji-translate.js"></script>
 </head>
-<style>
-body {
-  font-family: 'Helvetica';
-  font-weight: 300;
-  background: #fff;
-  color: #535353;
-  margin: 0px;
-  padding: 50px;
-  overflow: auto;
-  font-size: 16px;
-}
-
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  overflow: auto;
-}
-
-h1 {
-  font-weight: 300;
-}
-
-textarea {
-  width: 100%;
-  font-family: 'Helvetica';
-  font-weight: 300;
-  font-size: 16px;
-  height: 200px;
-  line-height: 24px;
-}
-
-#footer {
-  margin-top: 50px;
-  padding-top: 20px;
-  border-top: 2px solid #fde100;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-#footer > p {
-  text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: .2em;
-  padding-right: 6px;
-}
-
-.red {
-  color: #F44336;
-}
-
-</style>
-
 <body>
   <div class="container">
     <h1>From 🇬🇧</h1>
-    <p>(just start typing!)</p>
+    <p class="note">(just start typing!)</p>
     <textarea id="input">OMG!!! The house is on fire and the cat is eating all the donuts!</textarea>
+    <br><br>
     <h1>To ✨emoji✨</h1>
-    <p>(hover over the emoji to see the original word)</p>
+    <p class="note">(hover over the emoji to see the original word)</p>
     <div id="output">output</div>
 
     <div id="footer">
