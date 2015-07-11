@@ -53,8 +53,9 @@ function getMeAnEmoji(keyword) {
     return '';
 
   // Maybe this is a plural word but the keyword is the singular?
+  // Don't do it for two letter words since "as" would become "a" etc.
   var maybeSingular = '';
-  if (keyword[keyword.length - 1] == 's')
+  if (keyword.length > 2 && keyword[keyword.length - 1] == 's')
     maybeSingular = keyword.slice(0, keyword.length - 1);
 
   // Maybe this is a singular word but the keyword is the plural?
