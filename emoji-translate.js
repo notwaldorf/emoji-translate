@@ -51,7 +51,7 @@ function translateWord(word) {
 function getMeAnEmoji(keyword) {
   keyword = keyword.trim().toLowerCase();
 
-  if (!keyword || keyword == '')
+  if (!keyword || keyword === '')
     return '';
 
   // Maybe this is a plural word but the keyword is the singular?
@@ -73,4 +73,4 @@ function getMeAnEmoji(keyword) {
       return allEmojis[emoji].char;
   }
   return '';
-};
+}
