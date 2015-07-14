@@ -36,6 +36,7 @@ function translateWord(word) {
     // Emoji in bold text isn't rendered in Chrome :sob:
     node.style.fontWeight = 'normal';
     node.style.fontFamily = 'AppleColorEmoji';
+    node.style.letterSpacing = '0.1em';
     node.innerHTML = emoji;
   } else {
     node.innerHTML = word;
