@@ -80,7 +80,7 @@ function translateWord(word) {
 function getMeAnEmoji(keyword) {
   keyword = keyword.trim().toLowerCase();
 
-  if (!keyword || keyword == '')
+  if (!keyword || keyword === '' || keyword === 'it')
     return '';
 
   // Maybe this is a plural word but the keyword is the singular?
