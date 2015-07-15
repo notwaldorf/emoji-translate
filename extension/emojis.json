@@ -59,6 +59,11 @@
     "char": "🕛",
     "category": "objectsandsymbols"
   },
+  "grinning": {
+    "keywords": ["face", "smile", "happy", "joy"],
+    "char": "😀",
+    "category": "people"
+  },
   "grin": {
     "keywords": ["face", "happy", "smile", "joy"],
     "char": "😁",
