@@ -3,14 +3,14 @@
 
   "name" : "Emoji Translate",
   "description" : "Translates english words into magical emoji characters",
-  "version" : "1.0.2",
+  "version" : "1.0.3",
 
   "permissions": [
     "activeTab"
   ],
 
   "icons": {
-   "64": "logo.png"
+   "128": "logo.png"
   },
 
   "web_accessible_resources": [
