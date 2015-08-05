@@ -8,6 +8,6 @@
   "license": "MIT",
   "homepage": "https://github.com/notwaldorf/emoji-translate",
   "dependencies": {
-    "emojilib": "muan/emojilib"
+    "emojilib": "~1.0.0"
   }
 }
