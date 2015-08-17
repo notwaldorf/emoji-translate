@@ -1,12 +1,23 @@
 {
   "name": "emoji-translate",
   "version": "1.0.0",
+  "description": "A library that translates english words to emoji",
+  "authors": [
+    "Monica Dinculescu <noms@google.com>"
+  ],
+  "main": [
+    "emoji-translate.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/notwaldorf/emoji-translate"
   },
   "license": "MIT",
   "homepage": "https://github.com/notwaldorf/emoji-translate",
+  "ignore": [
+    "extension",
+    "bower_components"
+  ],
   "dependencies": {
     "emojilib": "~1.0.0"
   }

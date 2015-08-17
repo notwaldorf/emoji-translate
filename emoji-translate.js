@@ -1,18 +1,30 @@
 var allEmojis;
 var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
 
+/**
+ * Fires an emoji:ready event when the list of emojis has been loaded.
+ *
+ * @event emoji-ready
+ */
 (function() {
   var request = new XMLHttpRequest();
   request.open('GET', 'bower_components/emojilib/emojis.json', true);
   request.onload = function() {
     if (request.status >= 200 && request.status < 400) {
       allEmojis = JSON.parse(request.response);
-      $(document).trigger('emoji:ready');
+      var event = document.createEvent('HTMLEvents');
+      event.initEvent('emoji-ready', true, false);
+      document.dispatchEvent(event);
     }
   };
   request.send();
 })();
 
+/**
+ * Returns a possibly translated english word to emoji, ready for display.
+ * @param {String} word The word to be translated
+ * @returns {HTMLElement} A <span> element containing the translated word.
+ */
 function translateWord(word) {
   var node = document.createElement('span');
 
@@ -47,6 +59,11 @@ function translateWord(word) {
   return node;
 }
 
+/**
+ * Returns the emoji equivalent of an english word.
+ * @param {String} keyword The word to be translated
+ * @returns {String} The emoji character representing this word, or '' if one doesn't exist.
+ */
 function getMeAnEmoji(keyword) {
   keyword = keyword.trim().toLowerCase();
 
