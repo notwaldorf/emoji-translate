@@ -39,5 +39,5 @@ The `emoji-translate` api has 2 methods:
   * `translateWord(word)` -- returns a `<span>` element that contains either the
   original english `word`, or the emoji translation, ready for display.
 
-## ❤️
+## ❤
 This was made as part of an ⚡️emoji hackday⚡️ and  is powered by [emojilib](https://github.com/muan/emojilib), a magical `json` file of emoji names and keywords y'all should use in all your projects.
