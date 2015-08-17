@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/notwaldorf/emoji-translate"
+    "url": "git://github.com/notwaldorf/emoji-translate.git"
   },
   "license": "MIT",
   "homepage": "https://github.com/notwaldorf/emoji-translate",
