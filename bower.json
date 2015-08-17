@@ -16,7 +16,8 @@
   "homepage": "https://github.com/notwaldorf/emoji-translate",
   "ignore": [
     "extension",
-    "bower_components"
+    "bower_components",
+    "index.html"
   ],
   "dependencies": {
     "emojilib": "~1.0.0"

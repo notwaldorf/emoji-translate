@@ -61,32 +61,32 @@ function translateWord(word) {
 
 /**
  * Returns the emoji equivalent of an english word.
- * @param {String} keyword The word to be translated
+ * @param {String} word The word to be translated
  * @returns {String} The emoji character representing this word, or '' if one doesn't exist.
  */
-function getMeAnEmoji(keyword) {
-  keyword = keyword.trim().toLowerCase();
+function getMeAnEmoji(word) {
+  word = word.trim().toLowerCase();
 
-  if (!keyword || keyword === '' || keyword === 'it')
+  if (!word || word === '' || word === 'it')
     return '';
 
-  // Maybe this is a plural word but the keyword is the singular?
+  // Maybe this is a plural word but the word is the singular?
   // Don't do it for two letter words since "as" would become "a" etc.
   var maybeSingular = '';
-  if (keyword.length > 2 && keyword[keyword.length - 1] == 's')
-    maybeSingular = keyword.slice(0, keyword.length - 1);
+  if (word.length > 2 && word[word.length - 1] == 's')
+    maybeSingular = word.slice(0, word.length - 1);
 
-  // Maybe this is a singular word but the keyword is the plural?
+  // Maybe this is a singular word but the word is the plural?
   // Don't do this for single letter since that will pluralize crazy things.
-  var maybePlural = (keyword.length == 1) ? '' : keyword + 's';
+  var maybePlural = (word.length == 1) ? '' : word + 's';
 
   // Go through all the things and find the first one that matches.
   for (var emoji in allEmojis) {
-    var keywords = allEmojis[emoji].keywords;
-    if (emoji == keyword || emoji == maybeSingular || emoji == maybePlural ||
-        (keywords && keywords.indexOf(keyword) >= 0) ||
-        (keywords && keywords.indexOf(maybeSingular) >= 0) ||
-        (keywords && keywords.indexOf(maybePlural) >= 0))
+    var words = allEmojis[emoji].keywords;
+    if (emoji == word || emoji == maybeSingular || emoji == maybePlural ||
+        (words && words.indexOf(word) >= 0) ||
+        (words && words.indexOf(maybeSingular) >= 0) ||
+        (words && words.indexOf(maybePlural) >= 0))
       return allEmojis[emoji].char;
   }
   return '';
