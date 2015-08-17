@@ -14,7 +14,7 @@ You can also use this as a standalone library for your own translation purposes.
 
 ### Install
 ```
-bower install notwaldorf/emoji-translate
+bower install emoji-translate
 ```
 
 ### Usage
