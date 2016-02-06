@@ -73,8 +73,10 @@ function translateWord(word) {
     node.innerHTML = word;
   }
 
-  // Reapply the punctuation.
-  node.innerHTML = firstSymbol + node.innerHTML + lastSymbol + ' ';
+  // Reapply the punctuation but only add a bonus space for non-emoji.
+  node.innerHTML = firstSymbol + node.innerHTML + lastSymbol;
+  if (emoji == '')
+    node.innerHTML += ' ';
   return node;
 }
 
