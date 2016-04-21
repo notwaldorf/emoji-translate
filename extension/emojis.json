@@ -2115,7 +2115,7 @@
     "category": "travelandplaces"
   },
   "bus": {
-    "keywords": ["car", "vehicle", "transportation"],
+    "keywords": ["vehicle", "transportation"],
     "char": "🚌",
     "category": "travelandplaces"
   },
