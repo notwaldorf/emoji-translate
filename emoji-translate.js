@@ -42,23 +42,24 @@ function translateWord(word) {
     word = word.slice(0, word.length - 1);
   }
 
+  // If it's already an emoji, return it;
   var emoji = getMeAnEmoji(word);
-  if (emoji != '') {
-    node.title = word;
-    // Emoji in bold text isn't rendered in Chrome :sob:
-    node.style.fontWeight = 'normal';
-    node.style.fontFamily = 'AppleColorEmoji';
-    node.style.letterSpacing = '0.1em';
-    node.innerHTML = emoji;
+
+  if (emoji === '')
+    return null;
+
+  var node;
+  if (emoji.length === 1) {
+    node = document.createElement('span');
+    node.innerHTML = firstSymbol + emoji + lastSymbol + ' ';
   } else {
-    node.innerHTML = word;
+    node = document.createElement('select');
+    for (var i = 0; i < emoji.length; i++) {
+      var option = document.createElement('option');
+      option.innerHTML = firstSymbol + emoji[i] + lastSymbol + ' ';
+      node.appendChild(option);
+    }
   }
-
-  // Reapply the punctuation but only add a bonus space for non-emoji.
-  node.innerHTML = firstSymbol + node.innerHTML + lastSymbol;
-  if (emoji == '')
-    node.innerHTML += ' ';
-
   return node;
 }
 
@@ -84,13 +85,23 @@ function getMeAnEmoji(word) {
   var maybePlural = (word.length == 1) ? '' : word + 's';
 
   // Go through all the things and find the first one that matches.
+  var useful = [];
+
+  // Go through all the things and find the first one that matches.
   for (var emoji in allEmojis) {
     var words = allEmojis[emoji].keywords;
-    if (emoji == word || emoji == maybeSingular || emoji == maybePlural ||
+    if (word == allEmojis[emoji].char ||
+        emoji == word || emoji == maybeSingular || emoji == maybePlural ||
         (words && words.indexOf(word) >= 0) ||
         (words && words.indexOf(maybeSingular) >= 0) ||
-        (words && words.indexOf(maybePlural) >= 0))
-      return allEmojis[emoji].char;
+        (words && words.indexOf(maybePlural) >= 0)) {
+      useful.push(allEmojis[emoji].char);
+    }
   }
-  return '';
+
+  // Add the word itself if there was no emoji translation.
+  if (useful.length === 0)
+    useful.push(word);
+
+  return (useful.length === 0) ? '' : useful;
 };

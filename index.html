@@ -48,6 +48,30 @@
     line-height: 24px;
   }
 
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+    line-height: 1.5;
+    background-color: #eee;
+    border-radius: 3px;
+    margin: 0 4px 4px 4px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12),
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  }
+
+  select:focus {
+    background-color: #7bd6cf;
+  }
+
   #footer {
     margin-top: 100px;
     padding-top: 20px;
@@ -123,7 +147,9 @@
       var words = allLines[line].split(' ');
       // Re-add the translated words.
       for (var i = 0; i < words.length; i++ ) {
-        container.appendChild(translateWord(words[i]));
+        var node = translateWord(words[i]);
+        if (node)
+          container.appendChild(node);
       }
       var newLine = document.createElement('br');
       container.appendChild(newLine);
