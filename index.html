@@ -21,10 +21,12 @@
     overflow: auto;
     font-size: 16px;
   }
+
   .container {
     max-width: 600px;
     margin: 0 auto;
     overflow: auto;
+    z-index: 10;
   }
 
   @media (max-width: 500px) {
@@ -72,6 +74,23 @@
     background-color: #7bd6cf;
   }
 
+  button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    background: #E91E63;
+    color: white;
+    font-weight: normal;
+    transition: all .4s;
+    height: 30px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    font-size: 14px;
+    margin: 20px;
+  }
+
   #footer {
     margin-top: 100px;
     padding-top: 20px;
@@ -105,6 +124,15 @@
   a:hover {
     color: #2196F3;
   }
+
+  /* Hide this somewhere */
+  #clipboardContents {
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+  }
 </style>
 <body>
   <div class="container">
@@ -112,15 +140,18 @@
     <p class="note">(just start typing!)</p>
     <textarea id="input">OMG!!! The house is on fire and the cat is eating all the donuts!</textarea>
     <br><br>
-    <h1>To ✨emoji✨</h1>
-    <p class="note">(hover over the emoji to see the original word)</p>
+    <h1>To ✨emoji✨ <button onclick="copy()" id="copyButton">Copy to clipboard</button></h1>
     <div id="output"></div>
-
     <div id="footer">
         <p>made with <span class="red">❤︎</span> by <a href="https://twitter.com/notwaldorf">monica</a>.
         find this on <a href="https://github.com/notwaldorf/emoji-translate">github</a></p>
     </div>
   </div>
+
+  <!-- Gigantor hack to get the copy-to-clipboard working. I don't think it
+  works with hidden divs, so uhhhh just hide this one real well -->
+  <div id="clipboardContents"></div>
+
   <script>
   document.addEventListener('emoji-ready', function(){
     updateOutput();
@@ -132,12 +163,12 @@
 
   function updateOutput() {
     document.getElementById('output').innerHTML = '';
-    document.getElementById('output').appendChild(translateInputChunk());
+    translateInputChunk();
   }
 
   function translateInputChunk() {
     var text = document.getElementById('input').value;
-    var container = document.createElement('span');
+    var container = document.getElementById('output');
 
     var allLines = text.split('\n');
     for (var line = 0; line < allLines.length; line++ ){
@@ -156,6 +187,52 @@
     }
 
     return container;
+  }
+
+  function copy() {
+    var value = getActualOutput();
+    clipboardContents.textContent = value;
+
+    // From https://github.com/google/material-design-lite/blob/master/docs/_assets/snippets.js
+    var snipRange = document.createRange();
+    snipRange.selectNodeContents(clipboardContents);
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(snipRange);
+    var result = false;
+    try {
+      result = document.execCommand('copy');
+      copyButton.innerHTML = 'Done!';
+    } catch (err) {
+      // Copy command is not available
+      console.error(err);
+      copyButton.innerHTML = 'Oops, error copying :(';
+    }
+
+    // Return to the copy button after a second.
+    setTimeout(function() {
+      copyButton.innerHTML = 'Copy to clipboard';
+    }.bind(this), 1000);
+
+    selection.removeAllRanges();
+    return result;
+  }
+
+  function getActualOutput() {
+    var value = '';
+    var nodes = output.children;
+
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].tagName === 'SELECT') {
+        // Do this instead of .value because we want to maintain whitespace.
+        value += nodes[i].options[nodes[i].selectedIndex].textContent;
+      } else if (nodes[i].tagName === 'BR') {
+        value += '\n';
+      } else if (nodes[i].tagName != 'OPTION') {
+        value += nodes[i].textContent;
+      }
+    }
+    return value;
   }
   </script>
 </body>
