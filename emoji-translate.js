@@ -91,7 +91,8 @@ function getMeAnEmoji(word) {
   for (var emoji in allEmojis) {
     var words = allEmojis[emoji].keywords;
     if (word == allEmojis[emoji].char ||
-        emoji == word || emoji == maybeSingular || emoji == maybePlural ||
+        emoji == word || (emoji == word + '_face' ) || 
+	emoji == maybeSingular || emoji == maybePlural ||
         (words && words.indexOf(word) >= 0) ||
         (words && words.indexOf(maybeSingular) >= 0) ||
         (words && words.indexOf(maybePlural) >= 0)) {
