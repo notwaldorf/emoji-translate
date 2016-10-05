@@ -84,6 +84,8 @@ function getMeAnEmoji(word) {
   // Don't do this for single letter since that will pluralize crazy things.
   var maybePlural = (word.length == 1) ? '' : word + 's';
 
+  var maybeVerbed = (word.indexOf('ing') == -1) ? '' : word.substr(0, word.length-3);
+
   // Go through all the things and find the first one that matches.
   var useful = [];
 
@@ -91,11 +93,12 @@ function getMeAnEmoji(word) {
   for (var emoji in allEmojis) {
     var words = allEmojis[emoji].keywords;
     if (word == allEmojis[emoji].char ||
-        emoji == word || (emoji == word + '_face' ) || 
-	emoji == maybeSingular || emoji == maybePlural ||
+        emoji == word || (emoji == word + '_face' ) ||
+	emoji == maybeSingular || emoji == maybePlural || emoji == maybeVerbed ||
         (words && words.indexOf(word) >= 0) ||
         (words && words.indexOf(maybeSingular) >= 0) ||
-        (words && words.indexOf(maybePlural) >= 0)) {
+        (words && words.indexOf(maybePlural) >= 0) ||
+        (words && words.indexOf(maybeVerbed) >= 0)) {
       useful.push(allEmojis[emoji].char);
     }
   }
