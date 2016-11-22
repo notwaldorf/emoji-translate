@@ -99,7 +99,8 @@ function getMeAnEmoji(word) {
         (words && words.indexOf(maybeSingular) >= 0) ||
         (words && words.indexOf(maybePlural) >= 0) ||
         (words && words.indexOf(maybeVerbed) >= 0)) {
-      useful.push(allEmojis[emoji].char);
+      if (allEmojis[emoji].char !== null)
+        useful.push(allEmojis[emoji].char);
     }
   }
 
