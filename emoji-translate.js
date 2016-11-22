@@ -1,7 +1,7 @@
 var allEmojis;
 var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
 var defaultOptions = {
-  useFlags: true, //Whether to use flag emoji
+  excludedCategories: [], //Array of categories of emoji to ignore
   minLength: 0 //Minimum length of a word to convert to emoji
 };
 
@@ -32,7 +32,6 @@ var defaultOptions = {
  */
 function translateWord(word, options) {
   options = options || defaultOptions;
-  console.log(options);
   var node = document.createElement('span');
 
   // Punctuation blows. Get all the punctuation at the start and end of the word.
@@ -102,7 +101,7 @@ function getMeAnEmoji(word, options) {
   // Go through all the things and find the first one that matches.
   for (var emoji in allEmojis) {
     //Check if compatible with options
-    if (!options.useFlags && allEmojis[emoji].category == 'flags')
+    if (options.excludedCategories.indexOf(allEmojis[emoji].category) > -1)
       continue;
     var words = allEmojis[emoji].keywords;
     if (word == allEmojis[emoji].char ||
