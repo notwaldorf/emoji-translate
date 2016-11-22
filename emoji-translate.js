@@ -1,5 +1,9 @@
 var allEmojis;
 var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
+var defaultOptions = {
+  useFlags: true, //Whether to use flag emoji
+  minLength: 0 //Minimum length of a word to convert to emoji
+};
 
 /**
  * Fires an emoji:ready event when the list of emojis has been loaded.
@@ -23,9 +27,12 @@ var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
 /**
  * Returns a possibly translated english word to emoji, ready for display.
  * @param {String} word The word to be translated
+ * @params {Object} options Options object. See defaultOptions for doc
  * @returns {HTMLElement} A <span> element containing the translated word.
  */
-function translateWord(word) {
+function translateWord(word, options) {
+  options = options || defaultOptions;
+  console.log(options);
   var node = document.createElement('span');
 
   // Punctuation blows. Get all the punctuation at the start and end of the word.
@@ -41,9 +48,8 @@ function translateWord(word) {
     lastSymbol += word[word.length - 1];
     word = word.slice(0, word.length - 1);
   }
-
   // If it's already an emoji, return it;
-  var emoji = getMeAnEmoji(word);
+  var emoji = (word.length >= options.minLength) ? getMeAnEmoji(word, options) : [word];
 
   if (emoji === '')
     return null;
@@ -66,9 +72,10 @@ function translateWord(word) {
 /**
  * Returns the emoji equivalent of an english word.
  * @param {String} word The word to be translated
+ * @param {Object} options Options object. See defaultOptions for doc
  * @returns {String} The emoji character representing this word, or '' if one doesn't exist.
  */
-function getMeAnEmoji(word) {
+function getMeAnEmoji(word, options) {
   var originalWord = word;
   word = word.trim().toLowerCase();
 
@@ -94,6 +101,9 @@ function getMeAnEmoji(word) {
 
   // Go through all the things and find the first one that matches.
   for (var emoji in allEmojis) {
+    //Check if compatible with options
+    if (!options.useFlags && allEmojis[emoji].category == 'flags')
+      continue;
     var words = allEmojis[emoji].keywords;
     if (word == allEmojis[emoji].char ||
         emoji == word || (emoji == word + '_face' ) ||
