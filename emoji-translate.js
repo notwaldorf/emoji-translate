@@ -85,6 +85,8 @@ function getMeAnEmoji(word) {
   var maybePlural = (word.length == 1) ? '' : word + 's';
 
   var maybeVerbed = (word.indexOf('ing') == -1) ? '' : word.substr(0, word.length-3);
+  //Check if past tense of a verb i.e. -ed
+  var maybePastTense = (word.substr(word.length - 2, 2) == 'ed') ? word.substr(0, word.length-2) : '';
 
   // Go through all the things and find the first one that matches.
   var useful = [];
@@ -98,7 +100,8 @@ function getMeAnEmoji(word) {
         (words && words.indexOf(word) >= 0) ||
         (words && words.indexOf(maybeSingular) >= 0) ||
         (words && words.indexOf(maybePlural) >= 0) ||
-        (words && words.indexOf(maybeVerbed) >= 0)) {
+        (words && words.indexOf(maybeVerbed) >= 0) ||
+        (words && words.indexOf(maybePastTense) >= 0)) {
       if (allEmojis[emoji].char !== null)
         useful.push(allEmojis[emoji].char);
     }
