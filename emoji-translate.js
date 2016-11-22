@@ -2,7 +2,8 @@ var allEmojis;
 var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
 var defaultOptions = {
   excludedCategories: [], //Array of categories of emoji to ignore
-  minLength: 0 //Minimum length of a word to convert to emoji
+  minLength: 0, //Minimum length of a word to convert to emoji,
+  keepWord: false //Whether to append the emoji to the output word rather than overwriting it
 };
 
 /**
@@ -54,14 +55,15 @@ function translateWord(word, options) {
     return null;
 
   var node;
+  var appendWord = (options.keepWord && emoji != word) ? word : '';
   if (emoji.length === 1) {
     node = document.createElement('span');
-    node.innerHTML = firstSymbol + emoji + lastSymbol + ' ';
+    node.innerHTML = appendWord + firstSymbol + emoji + lastSymbol + ' ';
   } else {
     node = document.createElement('select');
     for (var i = 0; i < emoji.length; i++) {
       var option = document.createElement('option');
-      option.innerHTML = firstSymbol + emoji[i] + lastSymbol + ' ';
+      option.innerHTML = appendWord + firstSymbol + emoji[i] + lastSymbol + ' ';
       node.appendChild(option);
     }
   }
