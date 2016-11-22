@@ -69,6 +69,7 @@ function translateWord(word) {
  * @returns {String} The emoji character representing this word, or '' if one doesn't exist.
  */
 function getMeAnEmoji(word) {
+  var originalWord = word;
   word = word.trim().toLowerCase();
 
   if (!word || word === '' || word === 'it')
@@ -109,7 +110,7 @@ function getMeAnEmoji(word) {
 
   // Add the word itself if there was no emoji translation.
   if (useful.length === 0)
-    useful.push(word);
+    useful.push(originalWord);
 
   return (useful.length === 0) ? '' : useful;
 };
