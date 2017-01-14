@@ -70,8 +70,10 @@ function translateWord(word) {
  */
 function getMeAnEmoji(word) {
   word = word.trim().toLowerCase();
-
-  if (!word || word === '' || word === 'it')
+	
+  var countryCodes = ['us','to','so','no','in','be','it'];
+	
+  if (!word || word === '' || countryCodes.indexOf(word) != -1)
     return '';
 
   // Maybe this is a plural word but the word is the singular?
