@@ -1,5 +1,10 @@
 var allEmojis;
 var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
+var defaultOptions = {
+  excludedCategories: [], //Array of categories of emoji to ignore
+  minLength: 0, //Minimum length of a word to convert to emoji,
+  keepWord: false //Whether to append the emoji to the output word rather than overwriting it
+};
 
 /**
  * Fires an emoji:ready event when the list of emojis has been loaded.
@@ -23,9 +28,11 @@ var SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
 /**
  * Returns a possibly translated english word to emoji, ready for display.
  * @param {String} word The word to be translated
+ * @params {Object} options Options object. See defaultOptions for doc
  * @returns {HTMLElement} A <span> element containing the translated word.
  */
-function translateWord(word) {
+function translateWord(word, options) {
+  options = options || defaultOptions;
   var node = document.createElement('span');
 
   // Punctuation blows. Get all the punctuation at the start and end of the word.
@@ -41,22 +48,22 @@ function translateWord(word) {
     lastSymbol += word[word.length - 1];
     word = word.slice(0, word.length - 1);
   }
-
   // If it's already an emoji, return it;
-  var emoji = getMeAnEmoji(word);
+  var emoji = (word.length >= options.minLength) ? getMeAnEmoji(word, options) : [word];
 
   if (emoji === '')
     return null;
 
   var node;
+  var appendWord = (options.keepWord && emoji != word) ? word : '';
   if (emoji.length === 1) {
     node = document.createElement('span');
-    node.innerHTML = firstSymbol + emoji + lastSymbol + ' ';
+    node.innerHTML = appendWord + firstSymbol + emoji + lastSymbol + ' ';
   } else {
     node = document.createElement('select');
     for (var i = 0; i < emoji.length; i++) {
       var option = document.createElement('option');
-      option.innerHTML = firstSymbol + emoji[i] + lastSymbol + ' ';
+      option.innerHTML = appendWord + firstSymbol + emoji[i] + lastSymbol + ' ';
       node.appendChild(option);
     }
   }
@@ -66,9 +73,11 @@ function translateWord(word) {
 /**
  * Returns the emoji equivalent of an english word.
  * @param {String} word The word to be translated
+ * @param {Object} options Options object. See defaultOptions for doc
  * @returns {String} The emoji character representing this word, or '' if one doesn't exist.
  */
-function getMeAnEmoji(word) {
+function getMeAnEmoji(word, options) {
+  var originalWord = word;
   word = word.trim().toLowerCase();
 	
   var countryCodes = ['us','to','so','no','in','be','it'];
@@ -87,12 +96,17 @@ function getMeAnEmoji(word) {
   var maybePlural = (word.length == 1) ? '' : word + 's';
 
   var maybeVerbed = (word.indexOf('ing') == -1) ? '' : word.substr(0, word.length-3);
+  //Check if past tense of a verb i.e. -ed
+  var maybePastTense = (word.substr(word.length - 2, 2) == 'ed') ? word.substr(0, word.length-2) : '';
 
   // Go through all the things and find the first one that matches.
   var useful = [];
 
   // Go through all the things and find the first one that matches.
   for (var emoji in allEmojis) {
+    //Check if compatible with options
+    if (options.excludedCategories.indexOf(allEmojis[emoji].category) > -1)
+      continue;
     var words = allEmojis[emoji].keywords;
     if (word == allEmojis[emoji].char ||
         emoji == word || (emoji == word + '_face' ) ||
@@ -100,14 +114,16 @@ function getMeAnEmoji(word) {
         (words && words.indexOf(word) >= 0) ||
         (words && words.indexOf(maybeSingular) >= 0) ||
         (words && words.indexOf(maybePlural) >= 0) ||
-        (words && words.indexOf(maybeVerbed) >= 0)) {
-      useful.push(allEmojis[emoji].char);
+        (words && words.indexOf(maybeVerbed) >= 0) ||
+        (words && words.indexOf(maybePastTense) >= 0)) {
+      if (allEmojis[emoji].char !== null)
+        useful.push(allEmojis[emoji].char);
     }
   }
 
   // Add the word itself if there was no emoji translation.
   if (useful.length === 0)
-    useful.push(word);
+    useful.push(originalWord);
 
   return (useful.length === 0) ? '' : useful;
 };
