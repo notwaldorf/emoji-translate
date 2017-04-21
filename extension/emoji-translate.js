@@ -57,7 +57,7 @@ function translateWord(word) {
   }
 
   while (SYMBOLS.indexOf(word[word.length - 1]) != -1) {
-    lastSymbol += word[word.length - 1];
+    lastSymbol = word[word.length - 1] + lastSymbol;
     word = word.slice(0, word.length - 1);
   }
 
@@ -75,8 +75,10 @@ function translateWord(word) {
 
   // Reapply the punctuation but only add a bonus space for non-emoji.
   node.innerHTML = firstSymbol + node.innerHTML + lastSymbol;
-  if (emoji == '')
-    node.innerHTML += ' ';
+  if (emoji == '') {
+    node.innerHTML = firstSymbol + lastSymbol;
+  }
+
   return node;
 }
 
