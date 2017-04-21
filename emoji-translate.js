@@ -45,8 +45,10 @@ function translateWord(word) {
   // If it's already an emoji, return it;
   var emoji = getMeAnEmoji(word);
 
-  if (emoji === '')
-    return null;
+  if (emoji === '') {
+    node.innerHTML = firstSymbol + lastSymbol + ' ';
+    return node;
+  }
 
   var node;
   if (emoji.length === 1) {
