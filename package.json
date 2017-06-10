@@ -1,6 +1,6 @@
 {
   "name": "moji-translate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library that translates english words to emoji",
   "main": "emoji-translate.js",
   "scripts": {
