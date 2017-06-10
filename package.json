@@ -1,5 +1,5 @@
 {
-  "name": "emoji-translate",
+  "name": "moji-translate",
   "version": "1.0.0",
   "description": "A library that translates english words to emoji",
   "main": "emoji-translate.js",

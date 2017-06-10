@@ -14,7 +14,7 @@ You can also use this as a standalone library for your own translation purposes.
 
 ### Install
 ```
-npm install emoji-translate
+npm install moji-translate
 ```
 
 ### Usage
