@@ -14,30 +14,28 @@ You can also use this as a standalone library for your own translation purposes.
 
 ### Install
 ```
-bower install emoji-translate
+npm install emoji-translate
 ```
 
 ### Usage
-When `emoji-translate.js` is loaded, it will load json of emoji names and keywords, save it in a global called `allEmojis`, and fire an `emoji-ready` event. `allEmojis` has this structure:
-```json
-{
-  "grinning": {
-    "keywords": ["face", "smile", "happy", "joy"],
-    "char": "😀",
-    "category": "people"
-  },
-  "grin": {
-    "keywords": ["face", "happy", "smile", "joy"],
-    "char": "😁",
-    "category": "people"
-  },
-  ...
-}
 ```
-The `emoji-translate` api has 2 methods:
-  * `getMeAnEmoji(word)` -- returns the emoji translation of the english `word`, or the empty string if one doesn't exist.
-  * `translateWord(word)` -- returns a `<span>` element that contains either the
-  original english `word`, or the emoji translation, ready for display.
+translate = require('emoji-translate');
+```
 
-## ❤
+The `emoji-translate` api has 5 methods:
+
+module.exports.isMaybeAlreadyAnEmoji = isMaybeAlreadyAnEmoji;
+module.exports.getAllEmojiForWord = getAllEmojiForWord;
+module.exports.getEmojiForWord = getEmojiForWord;
+module.exports.translateForDisplay = translateForDisplay;
+module.exports.translate = translate;
+  * `isMaybeAlreadyAnEmoji` -- returns true if a character is very likely already an emoji (i.e. it exists as a key in `emojilib`)
+  * `getAllEmojiForWord(word)` -- returns a list of possible emoji translations
+  * `getEmojiForWord(word)` -- returns a random translation from the list
+  returned by `getAllEmojiForWord(word)`
+  * `translate(chunk, onlyEmoji)` -- returns a translation of the whole chunk of text. If `onlyEmoji` is true, then the untranslatable words are removed.
+  * `translateForDisplay` -- calls `translate` but returns a `<span>` element that contains either the original word, or the emoji translation, ready for display (either as a span, or a `<select>` if multiple translations are
+  available).
+
+## 💪
 This was made as part of an ⚡️emoji hackday⚡️ and  is powered by [emojilib](https://github.com/muan/emojilib), a magical `json` file of emoji names and keywords y'all should use in all your projects.
