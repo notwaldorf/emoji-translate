@@ -129,7 +129,11 @@ function getAllEmojiForWord(originalWord) {
         (words && words.indexOf(maybeSingular) >= 0) ||
         (words && words.indexOf(maybePlural) >= 0) ||
         (words && words.indexOf(maybeVerbed) >= 0)) {
-      useful.push(allEmoji[emoji].char);
+      // If it's a two letter word that got translated to a flag, it's 99% of the
+      // time incorrect, so stop doing that.
+      if (!(word.length == 2 && allEmoji[emoji].category == 'flags')) {
+        useful.push(allEmoji[emoji].char);
+      }
     }
   }
   return (useful.length === 0) ? '' : useful;
@@ -1394,6 +1398,7 @@ module.exports = {
 			"solong",
 			"farewell",
 			"hello",
+			"hi",
 			"palm"
 		],
 		"char": "👋",
@@ -11333,7 +11338,8 @@ module.exports = {
 			"agree",
 			"vote",
 			"election",
-			"answer"
+			"answer",
+			"tick"
 		],
 		"char": "✅",
 		"fitzpatrick_scale": false,
@@ -12404,7 +12410,8 @@ module.exports = {
 			"black-square",
 			"vote",
 			"election",
-			"yes"
+			"yes",
+			"tick"
 		],
 		"char": "☑️",
 		"fitzpatrick_scale": false,
