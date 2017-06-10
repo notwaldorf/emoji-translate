@@ -38,3 +38,15 @@ test('translate', function (t) {
 
   t.end();
 });
+
+test('annoying translations', function(t) {
+  // these should not be flags.
+  t.equal('im', translate.translate('im').trim());
+  t.equal('in', translate.translate('in').trim());
+  t.equal('is', translate.translate('is').trim());
+  t.equal('am', translate.translate('am').trim());
+
+  // hi should work
+  t.notEqual('hi', translate.translate('hi').trim());
+  t.end();
+});
