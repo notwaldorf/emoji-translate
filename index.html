@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="extension/logo.png">
   <link rel="apple-touch-icon" sizes="128x128" href="extension/logo.png" />
   <link href='https://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
-  <script src="emoji-translate.js"></script>
+  <script src="public/bundle.js"></script>
 </head>
 <style>
   body {
@@ -21,30 +21,25 @@
     overflow: auto;
     font-size: 16px;
   }
-
   .container {
     max-width: 600px;
     margin: 0 auto;
     overflow: auto;
     z-index: 10;
   }
-
   @media (max-width: 500px) {
     body {
       padding: 20px;
     }
-
     button {
       margin: 20px 0 !important;
     }
   }
-
   h1 {
     font-family: 'Lato', 'Helvetica', Arial, sans-serif;
     font-weight: 300;
     margin-bottom: 0;
   }
-
   textarea {
     width: 100%;
     font-family: 'Helvetica';
@@ -53,7 +48,6 @@
     height: 150px;
     line-height: 24px;
   }
-
   select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -73,11 +67,9 @@
               0 1px 5px 0 rgba(0, 0, 0, 0.12),
               0 3px 1px -2px rgba(0, 0, 0, 0.2);
   }
-
   select:focus {
     background-color: #7bd6cf;
   }
-
   button {
     border: none;
     outline: none;
@@ -94,7 +86,6 @@
     font-size: 14px;
     margin: 20px;
   }
-
   #footer {
     margin-top: 100px;
     padding-top: 20px;
@@ -102,33 +93,27 @@
     text-align: center;
     text-transform: uppercase;
   }
-
   #footer > p {
     text-transform: uppercase;
     font-size: 10px;
     letter-spacing: .2em;
     padding-right: 6px;
   }
-
   .note {
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 12px;
   }
-
   .red {
     color: #E91E63;
   }
-
   a:link, a:visited {
     color: #E91E63;
     text-decoration: none;
   }
-
   a:hover {
     color: #2196F3;
   }
-
   /* Hide this somewhere */
   #clipboardContents {
     opacity: 0;
@@ -156,88 +141,78 @@
   works with hidden divs, so uhhhh just hide this one real well -->
   <div id="clipboardContents"></div>
 
-  <script>
-  document.addEventListener('emoji-ready', function(){
-    updateOutput();
 
+  <script type="text/javascript">
+    console.log(EmojiTranslate.translate('the cat is on fire'));
+  </script>
+
+  <script>
+    updateOutput();
     document.getElementById('input').addEventListener('input', function() {
       updateOutput();
     });
-  });
-
-  function updateOutput() {
-    document.getElementById('output').innerHTML = '';
-    translateInputChunk();
-  }
-
-  function translateInputChunk() {
-    var text = document.getElementById('input').value;
-    var container = document.getElementById('output');
-
-    var allLines = text.split('\n');
-    for (var line = 0; line < allLines.length; line++ ){
-      if (allLines[line] == '')
-        continue
-
-      var words = allLines[line].split(' ');
-      // Re-add the translated words.
-      for (var i = 0; i < words.length; i++ ) {
-        var node = translateWord(words[i]);
-        if (node)
-          container.appendChild(node);
+    function updateOutput() {
+      // Rather than calling EmojiTranslate.translate, we want all the
+      // possible options.
+      document.getElementById('output').innerHTML = '';
+      var text = document.getElementById('input').value;
+      var container = document.getElementById('output');
+      var allLines = text.split('\n');
+      for (var line = 0; line < allLines.length; line++ ){
+        if (allLines[line] == '')
+          continue
+        var words = allLines[line].split(' ');
+        // Re-add the translated words.
+        for (var i = 0; i < words.length; i++ ) {
+          var node = EmojiTranslate.translateForDisplay(words[i]);
+          if (node)
+            container.appendChild(node);
+        }
+        var newLine = document.createElement('br');
+        container.appendChild(newLine);
       }
-      var newLine = document.createElement('br');
-      container.appendChild(newLine);
+      return container;
     }
-
-    return container;
-  }
-
-  function copy() {
-    var value = getActualOutput();
-    clipboardContents.textContent = value;
-
-    // From https://github.com/google/material-design-lite/blob/master/docs/_assets/snippets.js
-    var snipRange = document.createRange();
-    snipRange.selectNodeContents(clipboardContents);
-    var selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(snipRange);
-    var result = false;
-    try {
-      result = document.execCommand('copy');
-      copyButton.innerHTML = 'Done!';
-    } catch (err) {
-      // Copy command is not available
-      console.error(err);
-      copyButton.innerHTML = 'Oops, error copying :(';
-    }
-
-    // Return to the copy button after a second.
-    setTimeout(function() {
-      copyButton.innerHTML = 'Copy to clipboard';
-    }.bind(this), 1000);
-
-    selection.removeAllRanges();
-    return result;
-  }
-
-  function getActualOutput() {
-    var value = '';
-    var nodes = output.children;
-
-    for (var i = 0; i < nodes.length; i++) {
-      if (nodes[i].tagName === 'SELECT') {
-        // Do this instead of .value because we want to maintain whitespace.
-        value += nodes[i].options[nodes[i].selectedIndex].textContent;
-      } else if (nodes[i].tagName === 'BR') {
-        value += '\n';
-      } else if (nodes[i].tagName != 'OPTION') {
-        value += nodes[i].textContent;
+    function copy() {
+      var value = getActualOutput();
+      clipboardContents.textContent = value;
+      // From https://github.com/google/material-design-lite/blob/master/docs/_assets/snippets.js
+      var snipRange = document.createRange();
+      snipRange.selectNodeContents(clipboardContents);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(snipRange);
+      var result = false;
+      try {
+        result = document.execCommand('copy');
+        copyButton.innerHTML = 'Done!';
+      } catch (err) {
+        // Copy command is not available
+        console.error(err);
+        copyButton.innerHTML = 'Oops, error copying :(';
       }
+      // Return to the copy button after a second.
+      setTimeout(function() {
+        copyButton.innerHTML = 'Copy to clipboard';
+      }.bind(this), 1000);
+      selection.removeAllRanges();
+      return result;
     }
-    return value;
-  }
+    function getActualOutput() {
+      var value = '';
+      var nodes = output.children;
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].tagName === 'SELECT') {
+          // Do this instead of .value because we want to maintain whitespace.
+          value += nodes[i].options[nodes[i].selectedIndex].textContent;
+        } else if (nodes[i].tagName === 'BR') {
+          value += '\n';
+        } else if (nodes[i].tagName != 'OPTION') {
+          value += nodes[i].textContent;
+        }
+      }
+      return value;
+    }
   </script>
 </body>
 </html>
