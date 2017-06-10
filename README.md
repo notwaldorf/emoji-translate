@@ -26,12 +26,7 @@ console.log(translate.translate("the house is on fire and the cat is eating the 
 
 The `emoji-translate` api has 5 methods:
 
-module.exports.isMaybeAlreadyAnEmoji = isMaybeAlreadyAnEmoji;
-module.exports.getAllEmojiForWord = getAllEmojiForWord;
-module.exports.getEmojiForWord = getEmojiForWord;
-module.exports.translateForDisplay = translateForDisplay;
-module.exports.translate = translate;
-  * `isMaybeAlreadyAnEmoji` -- returns true if a character is very likely already an emoji (i.e. it exists as a key in `emojilib`)
+  * `isMaybeAlreadyAnEmoji` -- returns true if a character is already an emoji
   * `getAllEmojiForWord(word)` -- returns a list of possible emoji translations
   * `getEmojiForWord(word)` -- returns a random translation from the list
   returned by `getAllEmojiForWord(word)`

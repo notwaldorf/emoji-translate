@@ -43,11 +43,14 @@ test('annoying translations', function(t) {
   // these should not be flags.
   t.equal('im', translate.translate('im').trim());
   t.equal('in', translate.translate('in').trim());
-  t.equal('is', translate.translate('is').trim());
-  t.equal('am', translate.translate('am').trim());
+
+  // t.equal('is', translate.translate('is').trim());
+  // t.equal('am', translate.translate('am').trim());
 
   // hi should work
   t.notEqual('hi', translate.translate('hi').trim());
-  t.equal('👋', translate.translate('hi'));
+  t.notEqual('i am', translate.translate('i am').trim());
+  t.notEqual('she he is', translate.translate('she he is').trim());
+  t.notEqual('we they are', translate.translate('we they are').trim());
   t.end();
 });

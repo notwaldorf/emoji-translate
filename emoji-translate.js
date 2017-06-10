@@ -48,6 +48,20 @@ function getAllEmojiForWord(originalWord) {
     return useful;
   }
 
+  // If it's "i" or "i", add some faces to it.
+  if (word === 'i' || word === 'you') {
+    useful.push('😀');
+    useful.push('😊');
+  } else if (word === 'she'){
+    useful.push('💁');
+  } else if (word === 'he'){
+    useful.push('💁‍♂️');
+  } else if (word === 'we' || word === 'they') {
+    useful.push('👩‍👩‍👦‍👦');
+  } else if (word === 'am' || word === 'is' || word === 'are') {
+    useful.push('👉');
+  }
+
   for (let emoji in allEmoji) {
     let words = allEmoji[emoji].keywords;
     if (word == allEmoji[emoji].char ||
