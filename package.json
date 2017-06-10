@@ -5,7 +5,7 @@
   "main": "emoji-translate.js",
   "scripts": {
     "test": "node test.js",
-    "build": "npm install && webpack",
+    "build": "rm .gitignore && npm install && webpack",
     "clean": "rm -rf ./node_modules && rm -rf ./public"
   },
   "repository": {
