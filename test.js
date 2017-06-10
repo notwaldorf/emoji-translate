@@ -48,5 +48,6 @@ test('annoying translations', function(t) {
 
   // hi should work
   t.notEqual('hi', translate.translate('hi').trim());
+  t.equal('👋', translate.translate('hi'));
   t.end();
 });
