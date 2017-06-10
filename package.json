@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node test.js",
     "build": "rm .gitignore && npm install && webpack",
-    "clean": "rm -rf ./node_modules && rm -rf ./public"
+    "clean": "rm -rf ./node_modules"
   },
   "repository": {
     "type": "git",
