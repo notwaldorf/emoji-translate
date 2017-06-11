@@ -73,7 +73,7 @@ function getAllEmojiForWord(originalWord) {
         (words && words.indexOf(maybeVerbed) >= 0)) {
       // If it's a two letter word that got translated to a flag, it's 99% of the
       // time incorrect, so stop doing that.
-      if (!(word.length == 2 && allEmoji[emoji].category == 'flags')) {
+      if (!(word.length <= 3 && allEmoji[emoji].category == 'flags')) {
         useful.push(allEmoji[emoji].char);
       }
     }
@@ -147,11 +147,25 @@ function translate(sentence, onlyEmoji) {
   let translation = '';
   let words = sentence.split(' ');
   for (let i = 0; i < words.length; i++ ) {
-    let translated = getEmojiForWord(words[i]);
+    // Punctuation blows. Get all the punctuation at the start and end of the word.
+    // TODO: stop copy pasting this.
+    let firstSymbol = '';
+    let lastSymbol = '';
+    var word = words[i];
+    while (SYMBOLS.indexOf(word[0]) != -1) {
+      firstSymbol += word[0];
+      word = word.slice(1, word.length);
+    }
+    while (SYMBOLS.indexOf(word[word.length - 1]) != -1) {
+      lastSymbol += word[word.length - 1];
+      word = word.slice(0, word.length - 1);
+    }
+
+    let translated = getEmojiForWord(word);
     if (translated) {
-      translation += translated + ' ';
+      translation += firstSymbol + translated + lastSymbol + ' ';
     } else if (!onlyEmoji){
-      translation += words[i] + ' '
+      translation += firstSymbol + word + lastSymbol +  ' '
     }
   }
   return translation;

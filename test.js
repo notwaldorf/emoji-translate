@@ -52,5 +52,12 @@ test('annoying translations', function(t) {
   t.notEqual('i am', translate.translate('i am').trim());
   t.notEqual('she he is', translate.translate('she he is').trim());
   t.notEqual('we they are', translate.translate('we they are').trim());
+
+  // YES should not have a flag.
+  t.equal(-1, translate.getAllEmojiForWord('yes').indexOf('🇾🇪'));
+
+  // Exclamation marks should be preserved
+  t.equal(2, translate.translate('YES! victory!').match(/!/g).length);
+  t.equal(2, translate.translate('YES! victory!', true).match(/!/g).length);
   t.end();
 });
