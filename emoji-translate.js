@@ -152,15 +152,18 @@ function translate(sentence, onlyEmoji) {
     let firstSymbol = '';
     let lastSymbol = '';
     var word = words[i];
-    if (!onlyEmoji) {
-      while (SYMBOLS.indexOf(word[0]) != -1) {
-        firstSymbol += word[0];
-        word = word.slice(1, word.length);
-      }
-      while (SYMBOLS.indexOf(word[word.length - 1]) != -1) {
-        lastSymbol += word[word.length - 1];
-        word = word.slice(0, word.length - 1);
-      }
+
+    while (SYMBOLS.indexOf(word[0]) != -1) {
+      firstSymbol += word[0];
+      word = word.slice(1, word.length);
+    }
+    while (SYMBOLS.indexOf(word[word.length - 1]) != -1) {
+      lastSymbol += word[word.length - 1];
+      word = word.slice(0, word.length - 1);
+    }
+
+    if (onlyEmoji) {
+      firstSymbol = lastSymbol = ''
     }
 
     let translated = getEmojiForWord(word);

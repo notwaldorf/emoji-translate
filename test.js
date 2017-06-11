@@ -59,5 +59,7 @@ test('annoying translations', function(t) {
   // Exclamation marks should be preserved
   t.equal(2, translate.translate('YES! victory!').match(/!/g).length);
   t.equal(null, translate.translate('YES! victory!', true).match(/!/g));
+
+  t.notEqual('', translate.translate('welcome back, emoji robot! ready to take over the world?', true));
   t.end();
 });
