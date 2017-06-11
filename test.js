@@ -58,6 +58,6 @@ test('annoying translations', function(t) {
 
   // Exclamation marks should be preserved
   t.equal(2, translate.translate('YES! victory!').match(/!/g).length);
-  t.equal(2, translate.translate('YES! victory!', true).match(/!/g).length);
+  t.equal(null, translate.translate('YES! victory!', true).match(/!/g));
   t.end();
 });
