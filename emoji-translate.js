@@ -37,7 +37,20 @@ function getAllEmojiForWord(originalWord) {
   // Maybe this is a singular word but the word is the plural?
   // Don't do this for single letter since that will pluralize crazy things.
   let maybePlural = (word.length == 1) ? '' : word + 's';
-  let maybeVerbed = (word.indexOf('ing') == -1) ? '' : word.substr(0, word.length-3);
+
+  let maybeVerbedSimple = '';
+  let maybeVerbedVowel = '';
+  let maybeVerbedDoubled  = '';
+
+  if (word.indexOf('ing') !== -1) {
+    let verb = word.substr(0, word.length - 3);
+    // eating -> eat
+    maybeVerbedSimple = verb;
+    // dancing -> dance
+    maybeVerbedVowel = verb + 'e';
+    // running -> run
+    maybeVerbedDoubled = verb.substr(0, verb.length - 1);
+  }
 
   // Go through all the things and find the first one that matches.
   let useful = [];
@@ -64,13 +77,17 @@ function getAllEmojiForWord(originalWord) {
 
   for (let emoji in allEmoji) {
     let words = allEmoji[emoji].keywords;
+    // TODO: omg refactor this one day, please. Why is this even. Why.
     if (word == allEmoji[emoji].char ||
         emoji == word || (emoji == word + '_face') ||
-        emoji == maybeSingular || emoji == maybePlural || emoji == maybeVerbed ||
+        emoji == maybeSingular || emoji == maybePlural ||
+        emoji == maybeVerbedSimple || emoji == maybeVerbedVowel || emoji == maybeVerbedDoubled ||
         (words && words.indexOf(word) >= 0) ||
         (words && words.indexOf(maybeSingular) >= 0) ||
         (words && words.indexOf(maybePlural) >= 0) ||
-        (words && words.indexOf(maybeVerbed) >= 0)) {
+        (words && words.indexOf(maybeVerbedSimple) >= 0) ||
+        (words && words.indexOf(maybeVerbedVowel) >= 0) ||
+        (words && words.indexOf(maybeVerbedDoubled) >= 0)) {
       // If it's a two letter word that got translated to a flag, it's 99% of the
       // time incorrect, so stop doing that.
       if (!(word.length <= 3 && allEmoji[emoji].category == 'flags')) {
