@@ -30,9 +30,9 @@ The `emoji-translate` api has 5 methods:
   * `getAllEmojiForWord(word)` -- returns a list of possible emoji translations
   * `getEmojiForWord(word)` -- returns a random translation from the list
   returned by `getAllEmojiForWord(word)`
-  * `translate(chunk, onlyEmoji)` -- returns a translation of the whole chunk of text. If `onlyEmoji` is true, then the untranslatable words are removed.
+  * `translate(chunk, onlyEmoji)` -- returns a translation of the whole chunk of text. If `onlyEmoji` is true, then the untranslatable words are removed
   * `translateForDisplay` -- calls `translate` but returns a `<span>` element that contains either the original word, or the emoji translation, ready for display (either as a span, or a `<select>` if multiple translations are
-  available).
+  available)
 
 ## Chrome extension
 There's also a Chrome  [extension](https://chrome.google.com/webstore/detail/emoji-translate/kkkfndlpdajmbgofkidemhkjoinhmojl) that lets you translate any page on the internet to emoji. Your nightmares are finally over.
