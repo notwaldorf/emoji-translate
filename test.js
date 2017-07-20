@@ -39,14 +39,41 @@ test('translate', function (t) {
   t.end();
 });
 
-test('annoying translations', function(t) {
+test('punctuation', function(t) {
+  // Exclamation marks should be preserved
+  t.equal(2, translate.translate('YES! victory!').match(/!/g).length);
+  t.equal(null, translate.translate('YES! victory!', true).match(/!/g));
+  t.end();
+});
+
+test('flags', function(t) {
   // these should not be flags.
   t.equal('im', translate.translate('im').trim());
   t.equal('in', translate.translate('in').trim());
-  t.equal('is', translate.translate('is').trim());
-  t.equal('am', translate.translate('am').trim());
 
-  // hi should work
+  // YES should not have a flag.
+  t.equal(-1, translate.getAllEmojiForWord('yes').indexOf('🇾🇪'));
+  t.end();
+});
+
+test('hard coded words', function(t) {
+  t.notEqual('i am', translate.translate('i am').trim());
+  t.notEqual('she he is', translate.translate('she he is').trim());
+  t.notEqual('we they are', translate.translate('we they are').trim());
+  t.equal('🙌', translate.translate('thanks').trim());
+  t.end();
+});
+
+test('ing verbs', function(t) {
+  // English sucks. Dance+ing = dancing, run+ing = running, eat+ing = eating;
+  t.notEqual('saving', translate.translate('saving').trim());
+  t.notEqual('running', translate.translate('running').trim());
+  t.notEqual('eating', translate.translate('eating').trim());
+  t.end();
+});
+
+test('omg what is real', function(t) {
   t.notEqual('hi', translate.translate('hi').trim());
+  t.notEqual('', translate.translate('welcome back, emoji robot! ready to take over the world?', true));
   t.end();
 });
