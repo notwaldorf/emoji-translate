@@ -73,6 +73,8 @@ function getAllEmojiForWord(originalWord) {
     useful.push('👩‍👩‍👦‍👦');
   } else if (word === 'am' || word === 'is' || word === 'are') {
     useful.push('👉');
+  } else if (word === 'thanks') {
+    useful.push('🙌');
   }
 
   for (let emoji in allEmoji) {

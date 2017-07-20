@@ -60,6 +60,7 @@ test('hard coded words', function(t) {
   t.notEqual('i am', translate.translate('i am').trim());
   t.notEqual('she he is', translate.translate('she he is').trim());
   t.notEqual('we they are', translate.translate('we they are').trim());
+  t.equal('🙌', translate.translate('thanks').trim());
   t.end();
 });
 
