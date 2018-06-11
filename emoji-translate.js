@@ -24,7 +24,7 @@ function isMaybeAlreadyAnEmoji(word) {
 function getAllEmojiForWord(originalWord) {
   let word = originalWord.trim().toLowerCase();
 
-  if (!word || word === '' || word === 'a' || word === 'it' || word === 'is')
+  if (!word || word === '' || word === 'a' || word === 'it')
     return '';
 
   // Maybe this is a plural word but the word is the singular?
@@ -135,7 +135,7 @@ function translateForDisplay(word) {
     word = word.slice(0, word.length - 1);
   }
 
-  // If it's already an emoji, return it.
+  // If it's untranslatable, return the word itself
   var emoji = getAllEmojiForWord(word);
   if (emoji === '')
     emoji = [word];
@@ -177,7 +177,7 @@ function translate(sentence, onlyEmoji) {
       word = word.slice(1, word.length);
     }
     while (SYMBOLS.indexOf(word[word.length - 1]) != -1) {
-      lastSymbol += word[word.length - 1];
+      lastSymbol = word[word.length - 1] + lastSymbol;
       word = word.slice(0, word.length - 1);
     }
 
