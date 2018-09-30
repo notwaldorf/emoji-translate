@@ -77,26 +77,43 @@ function getAllEmojiForWord(originalWord) {
     useful.push('🙌');
   }
 
-  for (let emoji in allEmoji) {
-    let words = allEmoji[emoji].keywords;
-    // TODO: omg refactor this one day, please. Why is this even. Why.
-    if (word == allEmoji[emoji].char ||
-        emoji == word || (emoji == word + '_face') ||
-        emoji == maybeSingular || emoji == maybePlural ||
-        emoji == maybeVerbedSimple || emoji == maybeVerbedVowel || emoji == maybeVerbedDoubled ||
-        (words && words.indexOf(word) >= 0) ||
-        (words && words.indexOf(maybeSingular) >= 0) ||
-        (words && words.indexOf(maybePlural) >= 0) ||
-        (words && words.indexOf(maybeVerbedSimple) >= 0) ||
-        (words && words.indexOf(maybeVerbedVowel) >= 0) ||
-        (words && words.indexOf(maybeVerbedDoubled) >= 0)) {
-      // If it's a two letter word that got translated to a flag, it's 99% of the
-      // time incorrect, so stop doing that.
-      if (!(word.length <= 3 && allEmoji[emoji].category == 'flags')) {
-        useful.push(allEmoji[emoji].char);
+  // for (let emoji in allEmoji) {
+  //   let words = allEmoji[emoji].keywords;
+  //   // TODO: omg refactor this one day, please. Why is this even. Why.
+  //   if (word == allEmoji[emoji].char ||
+  //       emoji == word || (emoji == word + '_face') ||
+  //       emoji == maybeSingular || emoji == maybePlural ||
+  //       emoji == maybeVerbedSimple || emoji == maybeVerbedVowel || emoji == maybeVerbedDoubled ||
+  //       (words && words.indexOf(word) >= 0) ||
+  //       (words && words.indexOf(maybeSingular) >= 0) ||
+  //       (words && words.indexOf(maybePlural) >= 0) ||
+  //       (words && words.indexOf(maybeVerbedSimple) >= 0) ||
+  //       (words && words.indexOf(maybeVerbedVowel) >= 0) ||
+  //       (words && words.indexOf(maybeVerbedDoubled) >= 0)) {
+  //     // If it's a two letter word that got translated to a flag, it's 99% of the
+  //     // time incorrect, so stop doing that.
+  //     if (!(word.length <= 3 && allEmoji[emoji].category == 'flags')) {
+  //       useful.push(allEmoji[emoji].char);
+  //     }
+  //   }
+  // }
+  let compareArray = [word, word + '_face', maybePlural, maybeSingular, maybeVerbedSimple, maybeVerbedVowel, maybeVerbedDoubled];
+  for(key in allEmoji){
+    let keywords = new Set(allEmoji[key].keywords);
+    let flag = false;
+    compareArray.map(el => {
+      if(keywords.has(el)){ 
+        flag = true;
+        return;
+      }
+    });
+    if(keywords && (flag || compareArray.indexOf(key) >= 0)){
+      if((word.length <= 2 && allEmoji[key].category != 'flags') || (word.length > 2)){
+        useful.push(allEmoji[key].char + ' ');
       }
     }
   }
+
   return (useful.length === 0) ? '' : useful;
 }
 
