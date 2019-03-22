@@ -77,7 +77,7 @@ function getAllEmojiForWord(originalWord) {
     useful.push('🙌');
   }
 
- let compareArray = [word, word + '_face', maybePlural, maybeSingular, maybeVerbedSimple, maybeVerbedVowel, maybeVerbedDoubled];
+  let compareArray = [word, word + '_face', maybePlural, maybeSingular, maybeVerbedSimple, maybeVerbedVowel, maybeVerbedDoubled];
   for(key in allEmoji){
     let keywords = new Set(allEmoji[key].keywords);
     let flag = false;
