@@ -6,6 +6,7 @@
   "scripts": {
     "test": "node test.js",
     "build": "rm .gitignore && npm install && webpack",
+    "start": "webpack --mode development -w",
     "clean": "rm -rf ./node_modules"
   },
   "repository": {
