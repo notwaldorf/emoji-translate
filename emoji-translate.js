@@ -1,6 +1,6 @@
 const emojilib = require('emojilib');
 const SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
-const allEmoji = emojilib.lib;
+let allEmoji = emojilib.lib;
 
 /**
  * Returns true for something that's already an emoji like 🤖.
@@ -195,8 +195,19 @@ function translate(sentence, onlyEmoji) {
   return translation;
 }
 
+/**
+ * Allows mapping custom data to the emoji mapping.
+ * The input should be an object following the same structure as the data in emojilib.lib.
+ * @param {Object} customMapping The object containing the custom emoji mapping
+ * @returns {Object} the resulting emoji mapping.
+ */
+function addCustomEmojiMapping(customMapping) {
+    return allEmoji = Object.assign(allEmoji, customMapping);
+}
+
 module.exports.isMaybeAlreadyAnEmoji = isMaybeAlreadyAnEmoji;
 module.exports.getAllEmojiForWord = getAllEmojiForWord;
 module.exports.getEmojiForWord = getEmojiForWord;
 module.exports.translateForDisplay = translateForDisplay;
 module.exports.translate = translate;
+module.exports.addCustomEmojiMapping = addCustomEmojiMapping;
