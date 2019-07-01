@@ -91,15 +91,15 @@ test('Can instantiate with custom emoji mappings', function(t) {
             "category": "fantasy"
         }
     };
-    const customTranslate = require(__dirname + '/emoji-translate.js')(customMapping);
+    translate.addCustomEmojiMapping(customMapping);
 
-    let allHowdy = customTranslate.getAllEmojiForWord('howdy');
+    let allHowdy = translate.getAllEmojiForWord('howdy');
     t.equal(allHowdy.length > 0, true, 'howdy is translated to at least one thing');
     t.equal(allHowdy.indexOf('👋') !== 1, true, 'howdy is translated to 👋');
 
-    let nonExistent = customTranslate.getAllEmojiForWord(customSpecificKeyword);
+    let nonExistent = translate.getAllEmojiForWord(customSpecificKeyword);
     t.equal(nonExistent.length > 1, true, 'previously non existent emoji have been mapped');
 
-    let allCats = customTranslate.getAllEmojiForWord('cat');
+    let allCats = translate.getAllEmojiForWord('cat');
     t.equal(allCats.length > 2, true, 'cat is not overridden and still translated');
 });
