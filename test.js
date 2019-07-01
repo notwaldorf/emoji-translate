@@ -91,9 +91,14 @@ test('Can instantiate with custom emoji mappings', function(t) {
             "category": "fantasy"
         }
     };
-    translate.addCustomEmojiMapping(customMapping);
+
 
     let allHowdy = translate.getAllEmojiForWord('howdy');
+    t.equal(allHowdy.length > 0, false, 'howdy should not match any existing emoji mapping');
+
+    translate.addCustomEmojiMapping(customMapping);
+
+    allHowdy = translate.getAllEmojiForWord('howdy');
     t.equal(allHowdy.length > 0, true, 'howdy is translated to at least one thing');
     t.equal(allHowdy.indexOf('👋') !== 1, true, 'howdy is translated to 👋');
 
