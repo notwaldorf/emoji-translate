@@ -196,7 +196,9 @@ function translate(sentence, onlyEmoji) {
 }
 
 function addCustomEmojiMapping(customMapping) {
-    return allEmoji = Object.assign(allEmoji, customMapping);
+    allEmoji = Object.assign(allEmoji, customMapping);
+
+    console.log(allEmoji);
 }
 
 module.exports.isMaybeAlreadyAnEmoji = isMaybeAlreadyAnEmoji;

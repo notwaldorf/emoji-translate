@@ -79,7 +79,7 @@ test('omg what is real', function(t) {
 });
 
 test('Can instantiate with custom emoji mappings', function(t) {
-    const customSpecificKeyword = 'Very specific keyword that only should match the one nonexistent emoji';
+    const customSpecificKeyword = 'foobarbaz';
     const customMapping = {
         "wave": {
             "keywords": ["howdy"]
@@ -97,8 +97,10 @@ test('Can instantiate with custom emoji mappings', function(t) {
     t.equal(allHowdy.length > 0, true, 'howdy is translated to at least one thing');
     t.equal(allHowdy.indexOf('👋') !== 1, true, 'howdy is translated to 👋');
 
+
+
     let nonExistent = translate.getAllEmojiForWord(customSpecificKeyword);
-    t.equal(nonExistent.length > 1, true, 'previously non existent emoji have been mapped');
+    t.equal(nonExistent.length > 0, true, 'previously non existent emoji have been mapped');
 
     let allCats = translate.getAllEmojiForWord('cat');
     t.equal(allCats.length > 2, true, 'cat is not overridden and still translated');
