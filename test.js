@@ -77,3 +77,29 @@ test('omg what is real', function(t) {
   t.notEqual('', translate.translate('welcome back, emoji robot! ready to take over the world?', true));
   t.end();
 });
+
+test('Can instantiate with custom emoji mappings', function(t) {
+    const customSpecificKeyword = 'Very specific keyword that only should match the one nonexistent emoji';
+    const customMapping = {
+        "wave": {
+            "keywords": ["howdy"]
+        },
+        "nonexistent_emoji": {
+            "keywords": [customSpecificKeyword],
+            "char": "X",
+            "fitzpatrick_scale": false,
+            "category": "fantasy"
+        }
+    };
+    const customTranslate = require(__dirname + '/emoji-translate.js')(customMapping);
+
+    let allHowdy = customTranslate.getAllEmojiForWord('howdy');
+    t.equal(allHowdy.length > 0, true, 'howdy is translated to at least one thing');
+    t.equal(allHowdy.indexOf('👋') !== 1, true, 'howdy is translated to 👋');
+
+    let nonExistent = customTranslate.getAllEmojiForWord(customSpecificKeyword);
+    t.equal(nonExistent.length > 1, true, 'previously non existent emoji have been mapped');
+
+    let allCats = customTranslate.getAllEmojiForWord('cat');
+    t.equal(allCats.length > 2, true, 'cat is not overridden and still translated');
+});
