@@ -195,6 +195,12 @@ function translate(sentence, onlyEmoji) {
   return translation;
 }
 
+/**
+ * Allows mapping custom data to the emoji mapping.
+ * The input should be an object following the same structure as the data in emojilib.lib.
+ * @param {Object} customMapping The object containing the custom emoji mapping
+ * @returns {Object} the resulting emoji mapping.
+ */
 function addCustomEmojiMapping(customMapping) {
     return allEmoji = Object.assign(allEmoji, customMapping);
 }
