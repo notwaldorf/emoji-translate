@@ -77,3 +77,38 @@ test('omg what is real', function(t) {
   t.notEqual('', translate.translate('welcome back, emoji robot! ready to take over the world?', true));
   t.end();
 });
+
+test('Can instantiate with custom emoji mappings', function(t) {
+    const customSpecificKeyword = 'foobarbaz';
+    const customMapping = {
+        "wave": {
+            "keywords": ["howdy"]
+        },
+        "nonexistent_emoji": {
+            "keywords": [customSpecificKeyword],
+            "char": "X",
+            "fitzpatrick_scale": false,
+            "category": "fantasy"
+        }
+    };
+
+
+    let allHowdy = translate.getAllEmojiForWord('howdy');
+    t.equal(allHowdy.length > 0, false, 'howdy should not match any existing emoji mapping');
+
+    translate.addCustomEmojiMapping(customMapping);
+
+    allHowdy = translate.getAllEmojiForWord('howdy');
+    t.equal(allHowdy.length > 0, true, 'howdy is translated to at least one thing');
+    t.equal(allHowdy.indexOf('👋') !== 1, true, 'howdy is translated to 👋');
+
+
+
+    let nonExistent = translate.getAllEmojiForWord(customSpecificKeyword);
+    t.equal(nonExistent.length > 0, true, 'previously non existent emoji have been mapped');
+
+    let allCats = translate.getAllEmojiForWord('cat');
+    t.equal(allCats.length > 2, true, 'cat is not overridden and still translated');
+
+    t.end();
+});
