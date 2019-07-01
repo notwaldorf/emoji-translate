@@ -104,4 +104,6 @@ test('Can instantiate with custom emoji mappings', function(t) {
 
     let allCats = translate.getAllEmojiForWord('cat');
     t.equal(allCats.length > 2, true, 'cat is not overridden and still translated');
+
+    t.end();
 });
